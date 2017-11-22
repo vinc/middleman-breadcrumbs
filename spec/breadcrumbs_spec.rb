@@ -115,9 +115,10 @@ describe Breadcrumbs do
   end
 
   def page
-    path = Faker::Internet.url
+    url = Faker::Internet.url # "https://example.com/lorem_ipsum"
+    path = URI(url).path[1..-1] # "lorem_ipsum"
     title = Faker::Lorem.sentence
     data = OpenStruct.new title: title
-    OpenStruct.new data: data, path: path
+    OpenStruct.new data: data, path: path, url: url
   end
 end
