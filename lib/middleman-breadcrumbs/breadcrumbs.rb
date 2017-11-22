@@ -20,11 +20,15 @@ class Breadcrumbs < Middleman::Extension
 
   def breadcrumbs(page, separator: @separator, wrapper: @wrapper)
     hierarchy = [page]
-    hierarchy.unshift hierarchy.first.parent while hierarchy.first.parent
-    hierarchy.collect {|page| wrap link_to(page.data.title, "/#{page.path}"), wrapper: wrapper }.join(h separator)
+    hierarchy.unshift(hierarchy.first.parent) while hierarchy.first.parent
+    hierarchy.collect { |parent| wrap(pretty_link_to(parent), wrapper: wrapper) }.join(escape_html(separator))
   end
 
   private
+
+  def pretty_link_to(page)
+    link_to(page.data.title, URI(page.url).path)
+  end
 
   def wrap(content, wrapper: nil)
     wrapper ? content_tag(wrapper) { content } : content
