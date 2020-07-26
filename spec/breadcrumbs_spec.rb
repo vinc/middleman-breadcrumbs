@@ -115,7 +115,7 @@ describe Breadcrumbs do
   end
 
   def page
-    url = Faker::Internet.url # "https://example.com/lorem_ipsum"
+    url = Faker::Internet.url
     path = URI(url).path.gsub %r{^/}, ''
     title = Faker::Lorem.sentence
     data = OpenStruct.new title: title
